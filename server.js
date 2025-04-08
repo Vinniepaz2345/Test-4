@@ -11,7 +11,7 @@ const pair = require('./pair'); // No /src
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'pair.html'));
 });
 
 app.get('/pair', async (req, res) => {
