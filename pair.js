@@ -94,17 +94,13 @@ async function pair(number, id) {
 
         if (connection === "open") {
           await delay(5000);
-
           const filePath = `./temp/${id}/creds.json`;
-          if (!fs.existsSync(filePath)) return;
+if (!fs.existsSync(filePath)) return;
 
-          const megaUrl = await uploadCredsToMega(filePath);
-          const sid = megaUrl.includes("https://mega.nz/file/")
-            ? 'Vinnie~' + megaUrl.split("https://mega.nz/file/")[1]
-            : 'Error: Invalid URL';
-
-          // Send session ID to user via WhatsApp
-          const session = await Gifted.sendMessage(Gifted.user.id, { text: sid });
+const credsRaw = fs.readFileSync(filePath, 'utf-8');
+const session = await Gifted.sendMessage(Gifted.user.id, {
+  text: credsRaw.length > 4096 ? 'Session too large to send in one message.' : credsRaw
+});
 
           // Send branding info
           const VINNIE_TEXT = `
