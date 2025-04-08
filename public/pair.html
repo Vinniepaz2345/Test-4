@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vinnie Pairing Code</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #1a1a1a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: #2a2a2a;
+  padding: 20px 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+}
+button {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+pre {
+  margin-top: 15px;
+  background: #111;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Vinnie Pairing Code Generator</h1>
+    <input type="text" id="number" placeholder="Enter your WhatsApp number" />
+    <button onclick="generateCode()">Generate Code</button>
+    <pre id="output"></pre>
+  </div>
+  <script>
+    async function generateCode() {
+  const number = document.getElementById('number').value.trim();
+  const output = document.getElementById('output');
+
+  if (!number) return output.innerText = 'Please enter a number.';
+
+  output.innerText = 'Generating code... Please wait...';
+
+  try {
+    const res = await fetch('/code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ number })
+    });
+
+    const data = await res.json();
+    output.innerText = data.code ? `Pairing Code: ${data.code}` : `Error: ${JSON.stringify(data)}`;
+  } catch (err) {
+    output.innerText = 'An error occurred: ' + err.message;
+  }
+} 
+  </script>
+</body>
+</html>
