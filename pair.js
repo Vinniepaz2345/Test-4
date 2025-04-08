@@ -136,6 +136,4 @@ app.get('*', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Vinnie Pairing Server Running at http://localhost:${PORT}`);
-});
+module.exports = GIFTED_PAIR_CODE;
