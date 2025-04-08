@@ -135,5 +135,4 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pair.html'));
 });
 
-// Start server
-module.exports = GIFTED_PAIR_CODE;
+
