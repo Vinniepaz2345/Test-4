@@ -98,9 +98,21 @@ async function pair(number, id) {
 if (!fs.existsSync(filePath)) return;
 
 const credsRaw = fs.readFileSync(filePath, 'utf-8');
-const session = await Gifted.sendMessage(Gifted.user.id, {
-  text: credsRaw.length > 4096 ? 'Session too large to send in one message.' : credsRaw
-});
+if (Gifted.user?.id) {
+  await Gifted.sendMessage(Gifted.user.id, { text: sid });
+
+  await delay(1000);
+
+  const VINNIE_TEXT = `
+*✅Session ID Generated✅*
+...
+(branding text here)
+`;
+
+  await Gifted.sendMessage(Gifted.user.id, { text: VINNIE_TEXT });
+} else {
+  console.log("Bot is not connected properly. User ID missing.");
+}
 
           // Send branding info
           const VINNIE_TEXT = `
