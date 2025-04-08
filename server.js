@@ -3,9 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
 
 require('dotenv').config();
 require('events').EventEmitter.defaultMaxListeners = 500;
@@ -27,6 +24,7 @@ app.get('/pair', async (req, res) => {
   require('./pair')(number, id, res);
 });
 
-app.listen(PORT, () =>
-  console.log(`Vinnie Pairing Server Running at http://localhost:${PORT}`)
-);
+// Only ONE app.listen here
+app.listen(PORT, () => {
+  console.log(`Vinnie Pairing Server Running on port ${PORT}`);
+});
