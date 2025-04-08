@@ -6,41 +6,41 @@
   <title>Vinnie Pairing Code</title>
   <style>
     body {
-  font-family: Arial, sans-serif;
-  background: #1a1a1a;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.container {
-  background: #2a2a2a;
-  padding: 20px 30px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-}
-input, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
-  border: none;
-}
-button {
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-}
-pre {
-  margin-top: 15px;
-  background: #111;
-  padding: 10px;
-  border-radius: 5px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #2a2a2a;
+      padding: 20px 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      font-weight: bold;
+    }
+    pre {
+      margin-top: 15px;
+      background: #111;
+      padding: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
   </style>
 </head>
 <body>
@@ -52,36 +52,22 @@ pre {
   </div>
   <script>
     async function generateCode() {
-  const number = document.getElementById('number').value.trim();
-  const output = document.getElementById('output');
+      const number = document.getElementById('number').value.trim();
+      const output = document.getElementById('output');
 
-  if (!number) return output.innerText = 'Please enter a number.';
+      if (!number) return output.innerText = 'Please enter a number.';
 
-  output.innerText = 'Generating code... Please wait...';
+      output.innerText = 'Generating code... Please wait...';
 
-  try {
-    const res = await fetch('/code', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ number })
-    });
-
-    // Check if response is JSON
-    const contentType = res.headers.get('content-type') || '';
-    if (!contentType.includes('application/json')) {
-      const text = await res.text(); // fallback to plain text
-      throw new Error(`Invalid response: ${text.slice(0, 100)}...`);
-    }
-
-    const data = await res.json();
-    output.innerText = data.code
-      ? `Pairing Code: ${data.code}`
-      : data.error
-      ? `Error: ${data.error}`
-      : `Unexpected response: ${JSON.stringify(data)}`;
-  } catch (err) {
-    output.innerText = 'An error occurred: ' + err.message;
-  }
+      try {
+        const res = await fetch(`/pair?number=${encodeURIComponent(number)}`);
+        const data = await res.json();
+        output.innerText = data.code
+          ? `Pairing Code: ${data.code}`
+          : `Error: ${JSON.stringify(data)}`;
+      } catch (err) {
+        output.innerText = 'An error occurred: ' + err.message;
+      }
     }
   </script>
 </body>
