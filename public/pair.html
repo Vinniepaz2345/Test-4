@@ -66,12 +66,23 @@ pre {
       body: JSON.stringify({ number })
     });
 
+    // Check if response is JSON
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      const text = await res.text(); // fallback to plain text
+      throw new Error(`Invalid response: ${text.slice(0, 100)}...`);
+    }
+
     const data = await res.json();
-    output.innerText = data.code ? `Pairing Code: ${data.code}` : `Error: ${JSON.stringify(data)}`;
+    output.innerText = data.code
+      ? `Pairing Code: ${data.code}`
+      : data.error
+      ? `Error: ${data.error}`
+      : `Unexpected response: ${JSON.stringify(data)}`;
   } catch (err) {
     output.innerText = 'An error occurred: ' + err.message;
   }
-} 
+    }
   </script>
 </body>
 </html>
