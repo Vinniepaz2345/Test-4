@@ -165,5 +165,19 @@ app.post('/code', async (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pair.html'));
 });
+// Add your logic to generate the code, upload to Mega, etc.
+// For now, here’s a simplified version:
+
+module.exports = async function pair(number, id) {
+  // Clean the number
+  number = number.replace(/[^0-9]/g, '');
+
+  // Simulate a delay like you're pairing
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
+  // Simulated pairing code
+  const code = `vinnie-md-session:${id}`;
+  return code;
+};
 
 // Start server
