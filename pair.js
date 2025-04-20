@@ -16,6 +16,7 @@ const randomMegaId = (length = 6, numberLength = 4) => {
   const number = Math.floor(Math.random() * Math.pow(10, numberLength));
   return `${result}${number}`;
 };
+const code = await sock.requestPairingCode({ phoneNumber: number });
 
 const uploadCredsToMega = async (credsPath) => {
   const storage = await new Storage({
