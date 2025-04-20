@@ -112,4 +112,4 @@ Use your Session ID Above to Deploy your Bot.
   }
 });
 
-module.exports = pair;
+module.exports = rooter;
